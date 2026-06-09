@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulatore Accoppiamento Ottico</title>
+    <title>Optical Coupling Simulator</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: transparent; }
         .container { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 600px; text-align: center; }
@@ -19,21 +19,21 @@
 </head>
 <body>
     <div class="container">
-        <h3 style="margin-top:0; color:#333;">Tolleranze Allineamento Fibra-Die (NA=0.22)</h3>
+        <h3 style="margin-top:0; color:#333;">Fiber-Die Alignment Tolerances (NA=0.22)</h3>
         <div class="controls">
             <div class="control-group">
-                <label>Distanza Z: <span id="valZ">50</span> µm</label>
+                <label>Z-Distance: <span id="valZ">50</span> µm</label>
                 <input type="range" id="sliderZ" min="10" max="1500" value="50">
             </div>
             <div class="control-group">
-                <label>Disallineamento X: <span id="valX">0</span> µm</label>
+                <label>X-Misalignment: <span id="valX">0</span> µm</label>
                 <input type="range" id="sliderX" min="-250" max="250" value="0">
             </div>
         </div>
         <canvas id="simCanvas" width="600" height="250"></canvas>
         <div class="results">
-            <div class="res-box"><div class="res-label">Efficienza Relativa</div><span id="resEff">100.0</span>%</div>
-            <div class="res-box"><div class="res-label">Diametro Spot</div><span id="resSpot">222.5</span> µm</div>
+            <div class="res-box"><div class="res-label">Relative Efficiency</div><span id="resEff">100.0</span>%</div>
+            <div class="res-box"><div class="res-label">Spot Diameter</div><span id="resSpot">222.5</span> µm</div>
         </div>
     </div>
     <script>
@@ -58,11 +58,11 @@
             valZ.innerText = z; valX.innerText = x;
             resEff.innerText = efficiency.toFixed(1); resSpot.innerText = (spotRadius * 2).toFixed(1);
 
-            // Fibra
+            // Fiber
             ctx.fillStyle = 'rgba(0, 86, 179, 0.5)';
             ctx.fillRect(cx + x * scale - CORE_RADIUS * scale, 0, CORE_RADIUS * 2 * scale, cy);
             
-            // Cono di luce
+            // Light cone
             ctx.beginPath();
             ctx.moveTo(cx + x * scale - CORE_RADIUS * scale, cy);
             ctx.lineTo(cx + x * scale + CORE_RADIUS * scale, cy);
@@ -70,10 +70,10 @@
             ctx.lineTo(cx + x * scale - spotRadius * scale, cy + z * scale);
             ctx.fillStyle = 'rgba(0, 123, 255, 0.1)'; ctx.fill();
             
-            // Superficie Chip
+            // Chip Surface
             ctx.fillStyle = '#ddd'; ctx.fillRect(0, cy + z * scale, canvas.width, 20);
             
-            // Sorgente
+            // Source
             ctx.beginPath();
             ctx.arc(cx, cy + z * scale, SOURCE_RADIUS * scale, 0, Math.PI, true);
             ctx.fillStyle = '#ff4136'; ctx.fill();
